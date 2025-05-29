@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tình Yêu - Romantic Animation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pacifico&family=Great+Vibes&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Dancing Script', cursive;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Starry night background */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #fff, #ff69b4);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, #fff, transparent);
+            transform: translateY(-50%);
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(-100px) translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Falling hearts */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: fall 8s linear infinite;
+            z-index: 3;
+        }
+
+        .heart:nth-child(odd) {
+            color: #ff1493;
+        }
+
+        .heart:nth-child(3n) {
+            color: #ff6347;
+        }
+
+        .heart:nth-child(4n) {
+            color: #ff91a4;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Falling love messages */
+        .love-message {
+            position: absolute;
+            font-weight: bold;
+            animation: fallText 8s linear infinite;
+            z-index: 2;
+            text-shadow: 2px 2px 8px rgba(255,105,180,0.8), 0 0 20px currentColor;
+            white-space: nowrap;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .love-message.pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .love-message.great-vibes {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .love-message.kalam {
+            font-family: 'Kalam', cursive;
+        }
+
+        @keyframes fallText {
+            0% {
+                transform: translateY(-50px) rotate(-10deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translateY(50vh) rotate(5deg) scale(1.1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(90vh) rotate(-5deg) scale(0.9);
+            }
+            100% {
+                transform: translateY(100vh) rotate(10deg) scale(0.7);
+                opacity: 0;
+            }
+        }
+
+        /* Additional floating text animations */
+        @keyframes floatLeft {
+            0% {
+                transform: translateX(-50px) translateY(-50px) rotate(-15deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateX(20vw) translateY(20vh) rotate(0deg);
+            }
+            80% {
+                opacity: 1;
+                transform: translateX(80vw) translateY(80vh) rotate(15deg);
+            }
+            100% {
+                transform: translateX(120vw) translateY(100vh) rotate(30deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes zigzag {
+            0% {
+                transform: translateY(-50px) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            25% {
+                transform: translateY(25vh) translateX(30px) rotate(10deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-30px) rotate(-10deg);
+                opacity: 1;
+            }
+            75% {
+                transform: translateY(75vh) translateX(30px) rotate(10deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        .love-message.float-left {
+            animation: floatLeft 12s linear infinite;
+        }
+
+        .love-message.zigzag {
+            animation: zigzag 10s linear infinite;
+        }
+
+        /* Main romantic message */
+        .main-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 4;
+            color: #ff69b4;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        .names {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 4;
+            color: #ffd700;
+            font-size: 2em;
+            font-weight: bold;
+            text-shadow: 0 0 15px #ffd700;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 15px #ffd700;
+            }
+            100% {
+                text-shadow: 0 0 25px #ffd700, 0 0 35px #ffd700;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-message {
+                font-size: 1.8em;
+                padding: 0 20px;
+            }
+            
+            .names {
+                font-size: 1.5em;
+            }
+            
+            .love-message {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-message {
+                font-size: 1.4em;
+            }
+            
+            .names {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Thẻ audio với autoplay và loop; hidden để ẩn trình điều khiển -->
+  <audio id="bg-music" src="https://files.catbox.moe/70frqq.mp4" autoplay loop hidden></audio>
+    <!-- Starry background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Main romantic message -->
+    <div class="main-message">
+        Anh yêu em nhiều 💝💝💝😍
+    </div>
+    
+    <!-- Names -->
+    <div class="names">
+        Nam ❤️ Ngọc Ánh<br>
+        💖 Tình yêu mãi mãi 💖
+    </div>
+ <script>
+    // Trong một số trình duyệt, cần gọi play() sau khi DOM sẵn sàng
+    document.addEventListener('DOMContentLoaded', function() {
+      const music = document.getElementById('bg-music');
+      // Thử phát; nếu trình duyệt chặn autoplay, ta có thể bắt lỗi và đề nghị click
+      music.play().catch(() => {
+        console.log('Trình duyệt chặn autoplay. Vui lòng bấm nút play.');
+        // Tạo nút Play thay thế
+        const btn = document.createElement('button');
+        btn.textContent = '▶️';
+        btn.addEventListener('click', () => music.play());
+        document.body.appendChild(btn);
+      });
+    });
+  </script>
+    <script>
+        // Create twinkling stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 150;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Create shooting stars
+        function createShootingStar() {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.left = Math.random() * 100 + '%';
+            shootingStar.style.top = Math.random() * 50 + '%';
+            shootingStar.style.animation = 'shoot 3s linear';
+            document.body.appendChild(shootingStar);
+            
+            setTimeout(() => {
+                shootingStar.remove();
+            }, 3000);
+        }
+
+        // Create falling hearts
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['💖', '💝', '💗', '💓', '💕', '💘', '❤️', '💜', '🧡', '💛'][Math.floor(Math.random() * 10)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Create falling love messages
+        function createLoveMessage() {
+            const messages = [
+                'Anh yêu em nhiều 💝',
+                'Em là tất cả của anh 💖',
+                'Tình yêu mãi mãi 💗',
+                'Yêu em đến mãi mãi 💕',
+                'Em là ánh sáng của anh ✨',
+                'Tình yêu chân thành 💘',
+                'Mãi bên nhau nhé 💓',
+                'Em là thiên thần 👼',
+                'Yêu em vô điều kiện 💜',
+                'Hạnh phúc bên em 😍',
+                'Nam ❤️ Ngọc Ánh',
+                'Tình yêu đẹp nhất 🌹',
+                'Em là cuộc đời anh 💫',
+                'Yêu em từng giây phút ⏰',
+                'Mãi yêu em thôi 💞',
+                'Em là định mệnh 🌟',
+                'Yêu em từ cái nhìn đầu tiên 👀',
+                'Em đẹp như thiên thần 👸',
+                'Trái tim anh chỉ có em 💝',
+                'Em là niềm hạnh phúc của anh 😊',
+                'Yêu em không có lý do 💕',
+                'Em là món quà từ trời 🎁',
+                'Tình yêu này là mãi mãi 💖',
+                'Em làm anh say đắm 😍',
+                'Yêu em từng hơi thở 💨',
+                'Em là home của anh 🏠',
+                'Cùng nhau đến cuối đời 👫',
+                'Em là nắng trong tim anh ☀️',
+                'Yêu em hơn cả bản thân 💓',
+                'Em là lý do anh sống 🌈',
+                'Tình yêu chúng ta vĩnh cửu ♾️',
+                'Em đẹp nhất thế gian 🌸',
+                'Anh muốn che chở em mãi 🛡️',
+                'Em là báu vật của anh 💎',
+                'Yêu em không thể diễn tả 📝',
+                'Em là giấc mơ đẹp nhất 🌙',
+                'Tình yêu này thiêng liêng 🙏',
+                'Em là cả vũ trụ của anh 🌌',
+                'Yêu em như yêu chính mình 💗',
+                'Em là điều kỳ diệu nhất 🪄'
+            ];
+            
+            const colors = ['#ff69b4', '#ff1493', '#ff6347', '#ffd700', '#ff91a4', '#da70d6', '#ff8c00', '#ff4500', '#ff0080', '#8a2be2', '#ff7f50', '#ff69b4'];
+            const fonts = ['', 'pacifico', 'great-vibes', 'kalam'];
+            const animations = ['', 'float-left', 'zigzag'];
+            
+            const message = document.createElement('div');
+            message.className = 'love-message ' + fonts[Math.floor(Math.random() * fonts.length)] + ' ' + animations[Math.floor(Math.random() * animations.length)];
+            message.innerHTML = messages[Math.floor(Math.random() * messages.length)];
+            message.style.left = Math.random() * 90 + '%';
+            message.style.color = colors[Math.floor(Math.random() * colors.length)];
+            message.style.fontSize = (Math.random() * 12 + 18) + 'px';
+            message.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            message.style.animationDelay = Math.random() * 1 + 's';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 15000);
+        }
+
+        // Initialize everything
+        function init() {
+            createStars();
+            
+            // Create shooting stars periodically
+            setInterval(createShootingStar, 3000);
+            
+            // Create falling hearts continuously
+            setInterval(createFallingHeart, 600);
+            
+            // Create falling love messages continuously - more frequent for dense effect
+            setInterval(createLoveMessage, 400);
+            
+            // Create additional message streams
+            setInterval(() => {
+                createLoveMessage();
+                setTimeout(createLoveMessage, 200);
+            }, 800);
+            
+            // Add some initial elements for immediate effect
+            setTimeout(() => {
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(createFallingHeart, i * 100);
+                    setTimeout(createLoveMessage, i * 150);
+                    setTimeout(createLoveMessage, i * 250);
+                }
+            }, 500);
+        }
+
+        // Start the romantic animation when page loads
+        window.addEventListener('load', init);
+
+        // Add click interaction for extra hearts
+        document.addEventListener('click', function(e) {
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💖';
+                heart.style.position = 'absolute';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                heart.style.color = '#ff69b4';
+                heart.style.fontSize = '20px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '5';
+                heart.style.animation = 'fall 2s linear forwards';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        });
+
+        // Add touch support for mobile
+        document.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💕';
+                heart.style.position = 'absolute';
+                heart.style.left = touch.clientX + 'px';
+                heart.style.top = touch.clientY + 'px';
+                heart.style.color = '#ff1493';
+                heart.style.fontSize = '18px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '5';
+                heart.style.animation = 'fall 2s linear forwards';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
