@@ -277,8 +277,11 @@
     </style>
 </head>
 <body>
-    <!-- Thẻ audio với autoplay và loop; hidden để ẩn trình điều khiển -->
-  <audio id="bg-music" src="https://files.catbox.moe/70frqq.mp4" autoplay loop hidden></audio>
+ <!-- Thẻ audio với autoplay và loop (lặp lại) -->
+  <audio id="bg-music" autoplay loop>
+    <source src="https://files.catbox.moe/utdhge.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ thẻ audio.
+  </audio>
     <!-- Starry background -->
     <div class="stars" id="stars"></div>
     
@@ -292,21 +295,13 @@
         Nam ❤️ Ngọc Ánh<br>
         💖 Tình yêu mãi mãi 💖
     </div>
- <script>
-    // Trong một số trình duyệt, cần gọi play() sau khi DOM sẵn sàng
-    document.addEventListener('DOMContentLoaded', function() {
-      const music = document.getElementById('bg-music');
-      // Thử phát; nếu trình duyệt chặn autoplay, ta có thể bắt lỗi và đề nghị click
-      music.play().catch(() => {
-        console.log('Trình duyệt chặn autoplay. Vui lòng bấm nút play.');
-        // Tạo nút Play thay thế
-        const btn = document.createElement('button');
-        btn.textContent = '▶️';
-        btn.addEventListener('click', () => music.play());
-        document.body.appendChild(btn);
-      });
-    });
-  </script>
+    <script>
+  document.getElementById('unmute').onclick = function() {
+    var a = document.getElementById('bg');
+    a.muted = false;
+    this.style.display = 'none';
+  };
+</script>
     <script>
         // Create twinkling stars
         function createStars() {
